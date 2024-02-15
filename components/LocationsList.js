@@ -1,7 +1,8 @@
 import React from 'react';
 import { FlatList, View, Text, StyleSheet } from 'react-native';
+// import { locations } from './GetLocation';
 
-const locations = [
+const locationsTest = [
   {
     id: 1,
     latitude: 1,
@@ -38,30 +39,38 @@ const ListHeader = () => {
   );
 };
 
-const Item = ({ latitude, longitude, logDate }) => {
+const Item = ({ latitude, longitude, timestamp }) => {
   return (
     <View style={styles.itemContainer}>
       <Text style={styles.itemText}>{latitude}</Text>
       <Text style={styles.itemText}>{longitude}</Text>
-      <Text style={styles.itemText}>{logDate}</Text>
+      <Text style={styles.itemText}>{timestamp}</Text>
     </View>
   );
 };
 
-const LocationsList = () => {
+const LocationsList = ({ locations }) => {
   return (
     <View>
       <ListHeader />
       <FlatList
         data={locations}
-        renderItem={({ item }) => (
-          <Item
-            latitude={item.latitude}
-            longitude={item.longitude}
-            logDate={item.logDate.toLocaleString()}
-          />
-        )}
-        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => {
+          const { latitude, longitude, timestamp } = item.coords;
+
+          const formatCoords = (coord) => {
+            return Math.round(coord * 10000) / 10000;
+          };
+
+          return (
+            <Item
+              latitude={formatCoords(latitude)}
+              longitude={formatCoords(longitude)}
+              timestamp={timestamp}
+            />
+          );
+        }}
+        keyExtractor={(item) => locations.indexOf(item)}
       />
     </View>
   );

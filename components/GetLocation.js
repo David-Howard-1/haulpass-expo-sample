@@ -66,7 +66,7 @@ export default function GetLocation({ onLocationChange }) {
           style={{ marginVertical: 30 }}
           // endIcon={<Ionicons name="globe-outline" />}
         />
-        <Ionicons name="add-circle" size={25} color={colors.blue} />
+        <Ionicons name="sync" size={25} color={colors.blue} />
       </View>
     </View>
   );
